@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
-import Header from './components/header'; //imports code for the header of the application
+ //imports js code from the components folder
+import Header from './components/header';
+import AddTodo from '.components/addToDo'; 
+import TodoItems from './components/todoItem';
+
 
 export default function App() { //Root component 
   const [todos, setTodos] = useState([ //Initialize an array of objects
@@ -10,16 +14,31 @@ export default function App() { //Root component
     { text: 'Drnk Water', key: '4'}
   ])
 
-  var counter = 1;
+  const pressHandler = (key) => {
+    setTodos(prevTodos => {
+      return prevTodos.filter(todo => todo.key != key);
+    });
+  };
+
+  const submitHandler = (text) => 
+    {setText('');
+    setTodos(prevTodos => {
+      return [
+        { text, key: Math.random().toString() },
+        ...prevTodos
+      ];
+    });
+  };
 
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.content}>
+        <AddTodo submitHandler={submitHandler} />
         <View style={styles.list}>
           <FlatList 
             data={todos}
-            renderItem={ ({ item }) => (<Text style={styles.items}>{item.text}</Text>) }/>
+            renderItem={ ({ item }) => (<TodoItems item={item} pressHandler={pressHandler} />) }/>
         </View>
       </View>
     </View>
@@ -40,9 +59,4 @@ const styles = StyleSheet.create({ //style sheet
     marginTop: 20,
     textAlign: 'center'
   },
-  items: {
-    padding: 10,
-    fontSize:  14,
-    color: '#b0b0b0',
-  }
 });
