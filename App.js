@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList, Alert } from 'react-native';
  //imports js code from the components folder
 import Header from './components/header';
-import AddTodo from '.components/addToDo'; 
+import AddTodo from './components/addToDo'; 
 import TodoItems from './components/todoItem';
 
 
@@ -20,14 +20,19 @@ export default function App() { //Root component
     });
   };
 
-  const submitHandler = (text) => 
-    {setText('');
-    setTodos(prevTodos => {
-      return [
-        { text, key: Math.random().toString() },
-        ...prevTodos
-      ];
-    });
+  const submitHandler = (text) => {
+    if(text.length > 3){
+      setTodos(prevTodos => {
+        return [
+          { text, key: Math.random().toString() },
+          ...prevTodos
+        ];
+      });
+    } else {
+      Alert.alert('Error', 'Your item must be over three characters long', [
+        {text: 'Dismiss', onPress: () => console.log('alert closed') }
+      ]);
+    }
   };
 
   return (
@@ -57,6 +62,5 @@ const styles = StyleSheet.create({ //style sheet
   list: {
     flex: 1,
     marginTop: 20,
-    textAlign: 'center'
   },
 });
