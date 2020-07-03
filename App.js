@@ -16,7 +16,7 @@ export default function App() { //Root component
 
   const pressHandler = (key) => {
     setTodos(prevTodos => {
-      return prevTodos.filter(todo => todo.key != key);
+      return prevTodos.filter(todo => todo.key != key); //takes out object with same key
     });
   };
 
@@ -24,12 +24,12 @@ export default function App() { //Root component
     if(text.length > 3){
       setTodos(prevTodos => {
         return [
-          { text, key: Math.random().toString() },
+          { text, key: Math.random().toString() }, //adds object to the top of list
           ...prevTodos
         ];
       });
-    } else {
-      Alert.alert('Error', 'Your item must be over three characters long', [
+    } else { //alerts user if text is too short
+      Alert.alert('Error', 'Your item must be over three characters long', [ 
         {text: 'Dismiss', onPress: () => console.log('alert closed') }
       ]);
     }
@@ -43,7 +43,7 @@ export default function App() { //Root component
         <View style={styles.list}>
           <FlatList 
             data={todos}
-            renderItem={ ({ item }) => (<TodoItems item={item} pressHandler={pressHandler} />) }/>
+            renderItem={ ({ item } /* renders one item in the list at a time */) => (<TodoItems item={item} pressHandler={pressHandler} /> /*Passes parameters as variables*/) }/>
         </View>
       </View>
     </View>

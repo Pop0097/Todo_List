@@ -13,12 +13,13 @@ export default function AddTodo({ submitHandler }) {
             <TextInput 
                 style={styles.input}
                 placeholder='Enter item'
-                onChangeText={ changeHandler }
-                value={text} />
+                onChangeText={ changeHandler } //when text changes, this function is called
+                value={text} //state that concerns this 
+                />
             <Button 
                 color='pink'
-                onPress={() =>  { 
-                    submitHandler(text);
+                onPress={() =>  { //declares function
+                    submitHandler(text); //calls function in App.js and passes parameter
                     changeHandler('');
                     }}
                 title='Add Item'/>
